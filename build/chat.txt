@@ -1,0 +1,168 @@
+@@@OLD
+<title>Bộ nhớ &amp; Lưu trữ — Thuyết trình Tin học</title>
+@@@NEW
+<title>Bộ nhớ &amp; Lưu trữ</title>
+@@@OLD
+  .dash .src{margin:0;font-size:11.5px;color:var(--ink-soft)}
+@@@NEW
+  .dash .src{margin:0;font-size:11.5px;color:var(--ink-soft)}
+
+  /* ---------- Q&A drawer: ask Claude about the components ---------- */
+  .chatpill{border:0;cursor:pointer;font:inherit;background:#fdf8ef;color:var(--ink);
+    box-shadow:0 1px 1px rgba(52,34,16,.16),0 6px 14px -6px rgba(52,34,16,.32)}
+  .chatpill:hover{background:#fffcf5}
+  .chat{position:fixed;z-index:24;top:70px;bottom:118px;right:max(16px,env(safe-area-inset-right,0px));
+    width:min(410px,calc(100vw - 32px));display:flex;flex-direction:column;overflow:hidden;
+    background:#fdf8ef;color:var(--ink);border-radius:18px;
+    box-shadow:0 2px 4px rgba(52,34,16,.14),0 24px 50px -16px rgba(52,34,16,.42)}
+  .chat[hidden]{display:none}
+  .chat-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+    padding:16px 18px 12px;border-bottom:1px solid rgba(36,26,18,.12)}
+  .chat-k{margin:0;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .chat h3{margin:3px 0 0;font:500 25px/1.1 "EB Garamond",Georgia,serif}
+  .chat-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--ink);padding:2px 8px;border-radius:8px}
+  .chat-log{flex:1;min-height:0;overflow:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+  .msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}
+  .msg p{margin:0 0 6px}.msg p:last-child{margin:0}
+  .msg ul{margin:4px 0 6px;padding-left:18px}.msg li{margin-bottom:3px}
+  .msg.me{align-self:flex-end;background:var(--ink);color:#f6efe1;border-bottom-right-radius:4px}
+  .msg.ai{align-self:flex-start;background:#efe5d3;border-bottom-left-radius:4px}
+  .msg.wait{color:var(--ink-soft);font-style:italic}
+  .msg.note{align-self:center;background:none;padding:0;font-size:12.5px;color:var(--ink-soft);text-align:center}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 12px}
+  .chips button{border:1px solid rgba(36,26,18,.22);background:none;border-radius:999px;padding:7px 11px;
+    font:400 12.5px/1.25 Inter,sans-serif;color:var(--ink);cursor:pointer;text-align:left}
+  .chips button:hover{background:#efe5d3}
+  .chat-form{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(36,26,18,.12)}
+  .chat-form textarea{flex:1;min-width:0;resize:none;border:1px solid rgba(36,26,18,.24);border-radius:12px;
+    padding:9px 11px;font:400 14.5px/1.4 Inter,sans-serif;background:#fffdf8;color:var(--ink)}
+  .chat-form button{border:0;border-radius:12px;padding:0 16px;font:500 14px Inter,sans-serif;cursor:pointer;
+    background:var(--ink);color:#f6efe1}
+  #chat-stop{display:none;background:#efe5d3;color:var(--ink)}
+  .chat.busy #chat-stop{display:block}.chat.busy #chat-send{display:none}
+  .chat-foot{margin:0;padding:0 18px 12px;font-size:11.5px;color:var(--ink-soft)}
+  .chat button:focus-visible,.chat textarea:focus-visible,.chatpill:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+@@@OLD
+    <a class="pill rise" data-d="285" href="https://thanhnien.vn/khung-hoang-gia-ram-keo-dai-den-tan-nam-2030-185260319092018273.htm" target="_blank" rel="noopener">Nguồn tham khảo</a>
+@@@NEW
+    <button class="pill chatpill rise" data-d="240" id="chat-open" hidden>Hỏi đáp</button>
+    <a class="pill rise" data-d="285" href="https://thanhnien.vn/khung-hoang-gia-ram-keo-dai-den-tan-nam-2030-185260319092018273.htm" target="_blank" rel="noopener">Nguồn tham khảo</a>
+@@@OLD
+<div class="dash" id="dash"></div>
+@@@NEW
+<div class="dash" id="dash"></div>
+<aside class="chat" id="chat" hidden aria-label="Hỏi đáp về linh kiện">
+  <div class="chat-head">
+    <div><p class="chat-k">Hỏi đáp</p><h3>Hỏi Claude về linh kiện</h3></div>
+    <button class="chat-x" id="chat-close" aria-label="Đóng hỏi đáp">×</button>
+  </div>
+  <div class="chat-log" id="chat-log" aria-live="polite">
+    <div class="msg ai"><p>Hỏi bất cứ điều gì về RAM, ổ cứng hay các linh kiện máy tính khác. Câu trả lời bám theo nội dung bài thuyết trình.</p></div>
+  </div>
+  <div class="chips" id="chat-chips">
+    <button type="button">Vì sao RAM mất dữ liệu khi tắt máy?</button>
+    <button type="button">DDR4 khác DDR5 ở điểm nào?</button>
+    <button type="button">Nên chọn SSD SATA hay NVMe?</button>
+    <button type="button">Vì sao HDD vẫn còn được dùng?</button>
+  </div>
+  <form class="chat-form" id="chat-form">
+    <textarea id="chat-input" rows="2" placeholder="Nhập câu hỏi, Enter để gửi"></textarea>
+    <button type="submit" id="chat-send">Gửi</button>
+    <button type="button" id="chat-stop">Dừng</button>
+  </form>
+  <p class="chat-foot">Mỗi câu hỏi dùng lượt Claude trong tài khoản của bạn.</p>
+</aside>
+@@@OLD
+     e.target.closest('.dash'))return;
+@@@NEW
+     e.target.closest('.dash')||e.target.closest('.chat'))return;
+@@@OLD
+addEventListener('pointermove',e=>{
+@@@NEW
+addEventListener('pointermove',e=>{
+  if(e.target.closest&&e.target.closest('.chat'))return;
+@@@OLD
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&S.active)clearActive();
+@@@NEW
+addEventListener('keydown',e=>{
+  if(e.target.closest&&e.target.closest('input,textarea'))return;   // typing a question must not turn the volumes
+  if(e.key==='Escape'&&S.active)clearActive();
+@@@OLD
+/* ---- boot ---- */
+@@@NEW
+/* ════════════════════════════════════════════════════════════════════════
+   8 · HỎI ĐÁP — ask Claude about the components, on the viewer's own account
+   ════════════════════════════════════════════════════════════════════════ */
+const chatEl=document.getElementById('chat'), chatLog=document.getElementById('chat-log'),
+      chatForm=document.getElementById('chat-form'), chatInput=document.getElementById('chat-input'),
+      chatOpen=document.getElementById('chat-open'), chatChips=document.getElementById('chat-chips');
+// Claude remembers nothing between calls: every call carries the rules, the talk and the chat so far
+const chatRules=()=>`Bạn là trợ lý hỏi đáp trong bài thuyết trình môn Tin học về linh kiện máy tính (RAM, ổ cứng HDD/SSD và các linh kiện khác như CPU, GPU, bo mạch chủ, nguồn).
+Trả lời bằng tiếng Việt, đúng kiến thức, dễ hiểu với sinh viên, thường 3–6 câu; khi phù hợp hãy giải thích "tại sao". Chỉ dùng câu văn thường, **in đậm** và gạch đầu dòng "- "; không dùng tiêu đề hay bảng.
+Nếu câu hỏi không liên quan đến máy tính, trả lời ngắn rằng bạn chỉ hỏi đáp về linh kiện máy tính.
+
+Nội dung bài thuyết trình:
+${BOOKS.map(b=>`Phần ${b.vol} – ${b.title}: ${b.blurb} ${b.pts.join(' ')} ${b.back.join(' ')}`).join('\n')}${
+  S.active?`\n\nNgười xem đang mở Phần ${S.active.data.vol} (${S.active.data.title}).`:''}`;
+const turns=[]; let askFn=null, askCtl=null;
+function inline(el,s){                   // **bold**, everything else as plain text
+  for(const part of s.split(/(\*\*[^*]+\*\*)/)){
+    if(/^\*\*[^*]+\*\*$/.test(part)){const b=document.createElement('strong');b.textContent=part.slice(2,-2);el.appendChild(b);}
+    else if(part) el.appendChild(document.createTextNode(part));
+  }
+}
+function setMsg(el,text){
+  el.replaceChildren(); let ul=null;
+  for(const line of text.split('\n')){
+    const m=line.match(/^\s*[-•*]\s+(.*)/);
+    if(m){ if(!ul){ul=document.createElement('ul');el.appendChild(ul);}
+           const li=document.createElement('li');inline(li,m[1]);ul.appendChild(li);continue; }
+    ul=null; if(!line.trim())continue;
+    const p=document.createElement('p');inline(p,line.replace(/^#+\s*/,''));el.appendChild(p);
+  }
+}
+function bubble(kind,text){
+  const d=document.createElement('div'); d.className='msg '+kind;
+  if(text) setMsg(d,text);
+  chatLog.appendChild(d); chatLog.scrollTop=chatLog.scrollHeight; return d;
+}
+const ASK_ERR={rate_limited:'Đang hỏi quá nhiều. Đợi một lát rồi thử lại.',
+  session_expired:'Phiên đăng nhập Claude đã hết hạn. Hãy đăng nhập lại.',
+  refused:'Claude không trả lời câu này. Thử hỏi theo cách khác.',
+  empty_completion:'Chưa có câu trả lời. Thử hỏi ngắn gọn hơn.',
+  prompt_too_large:'Cuộc trò chuyện đã quá dài. Tải lại trang để bắt đầu lại.'};
+const ASK_OFF=['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'];
+async function ask(q){
+  q=q.trim(); if(!q||askCtl||!askFn) return;
+  chatChips.hidden=true;
+  bubble('me',q); turns.push({role:'user',content:q});
+  const out=bubble('ai wait'); out.textContent='Đang suy nghĩ…';
+  askCtl=new AbortController(); chatEl.classList.add('busy');
+  try{
+    const {text,truncated}=await askFn([{role:'user',content:chatRules()},...turns.slice(-12)],{
+      cache:false, signal:askCtl.signal,
+      onText:({text})=>{out.classList.remove('wait');setMsg(out,text);chatLog.scrollTop=chatLog.scrollHeight;}});
+    turns.push({role:'assistant',content:text});
+    if(truncated) bubble('note','Câu trả lời bị cắt ngắn. Hãy hỏi hẹp hơn.');
+  }catch(e){
+    out.classList.remove('wait');
+    if(e.text){ setMsg(out,e.text); turns.push({role:'assistant',content:e.text}); } else out.remove();
+    if(ASK_OFF.includes(e.code)){
+      bubble('note','Trang chưa được phép dùng Claude, nên phần hỏi đáp tạm tắt.');
+      chatInput.disabled=true; askFn=null;
+    } else if(e.code!=='cancelled') bubble('note',ASK_ERR[e.code]||'Mất kết nối với Claude. Thử lại sau.');
+  }finally{ askCtl=null; chatEl.classList.remove('busy'); }
+}
+chatOpen.addEventListener('click',()=>{ chatEl.hidden=!chatEl.hidden; if(!chatEl.hidden) chatInput.focus(); });
+document.getElementById('chat-close').addEventListener('click',()=>{ chatEl.hidden=true; });
+document.getElementById('chat-stop').addEventListener('click',()=>askCtl?.abort());
+chatForm.addEventListener('submit',e=>{ e.preventDefault(); const q=chatInput.value; chatInput.value=''; ask(q); });
+chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); chatForm.requestSubmit(); }
+  if(e.key==='Escape') chatEl.hidden=true; });
+chatChips.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) ask(b.textContent); });
+// the button only appears where this view can reach Claude (a published artifact), never in a saved copy
+window.claude?.use?.('sample').then(fn=>{ if(fn){ askFn=fn; chatOpen.hidden=false; } }).catch(()=>{});
+
+/* ---- boot ---- */
+@@@END

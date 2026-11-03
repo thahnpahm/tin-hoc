@@ -1,0 +1,57 @@
+@@@OLD
+  /* ---------- Q&A drawer: ask Claude about the components ---------- */
+@@@NEW
+  /* ---------- captions under the two drives of the comparison volume ---------- */
+  .pair-cap{position:fixed;inset:0;z-index:14;pointer-events:none;opacity:0;transition:opacity .3s var(--ease)}
+  .pair-cap.on{opacity:1;transition:opacity .5s var(--ease) .5s}
+  .pair-cap div{position:absolute;top:calc(var(--y) + 14px);transform:translateX(-50%);text-align:center;
+    width:max-content;max-width:19vw;transition:left .7s var(--ease)}
+  #cap-a{left:var(--a)} #cap-b{left:var(--b)}
+  .pair-cap b{display:block;font:500 clamp(17px,2.5vh,23px)/1.15 "EB Garamond",Georgia,serif;color:var(--ink)}
+  .pair-cap span{display:block;margin-top:4px;font-size:clamp(12px,1.65vh,14px);line-height:1.35;color:var(--ink-soft)}
+  body.mobile .pair-cap{display:none}
+
+  /* ---------- Q&A drawer: ask Claude about the components ---------- */
+@@@OLD
+<div class="dash" id="dash"></div>
+@@@NEW
+<div class="dash" id="dash"></div>
+<div class="pair-cap" id="pair-cap" aria-hidden="true"><div id="cap-a"></div><div id="cap-b"></div></div>
+@@@OLD
+  const w=B.land?B.H:B.W, h=B.land?B.W:B.H;
+@@@NEW
+  const w=B.aw||(B.land?B.H:B.W), h=B.ah||(B.land?B.W:B.H);
+@@@OLD
+  B.tActiveP.start([ax,ay,az],K.activeDuration,activeEase);
+@@@NEW
+  B.tActiveP.start([ax,ay,az],K.activeDuration,activeEase);
+  B._az=az;
+  if(B.pair) B.tPair.start([1],K.activeDuration,activeEase);   // the second drive slides out of the first
+  placeCaps(B,az);
+@@@OLD
+  dashEl.classList.remove('on');
+@@@NEW
+  dashEl.classList.remove('on');
+  placeCaps(null);
+  if(B.pair) B.tPair.start([0],K.activeDuration*0.8,easeSettle);
+@@@OLD
+  renderPanel(B);
+  if(detailEl.animate)
+@@@NEW
+  renderPanel(B);
+  placeCaps(B,B._az);
+  if(detailEl.animate)
+@@@OLD
+    B.backMat.uniforms.uOpacity.value=op;
+@@@NEW
+    B.backMat.uniforms.uOpacity.value=op;
+    if(B.pair){
+      for(const m of B.pair.mats) m.uniforms.uOpacity.value=op;
+      B.tPair.update(); const k=B.tPair.v[0];
+      B.devA.position.x=B.pair.xA*k; B.pair.g.position.x=B.pair.xB*k; B.pair.g.scale.setScalar(k);
+    }
+@@@OLD
+    const h=ray.intersectObject(S.active.body,false);
+@@@NEW
+    const h=ray.intersectObjects(S.active.bodies,false);
+@@@END
