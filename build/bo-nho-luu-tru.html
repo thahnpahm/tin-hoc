@@ -355,7 +355,7 @@ const STUDIO = 'Tin học';
 const BRAND  = 'BỘ NHỚ & LƯU TRỮ';
 const BOOKS = [
   { id:'ram', title:'RAM là gì?', t1:'BỘ NHỚ RAM', t2:'',
-    sub:'RANDOM ACCESS MEMORY', year:'RAM', vol:'I', shelf:0, slot:0,
+    sub:'RANDOM ACCESS MEMORY', year:'RAM', vol:'I', shelf:0, at:[-1.05,1.0],
     spine:'#2f6b55', cloth:'#0f1714', edge:'#e4dcc6', dev:{f:"gskill",b:"gskill",inset:[0.62,0.97],mm:133.35,d:7,land:1,edge:"#7d1512"}, credit:"Ảnh: ElooKoN · CC BY-SA 4.0 · Wikimedia Commons",
     stat:'10–50 ns', statLabel:'ĐỘ TRỄ TRUY XUẤT CỦA RAM',
     blurb:'Bộ nhớ khả biến nằm sát CPU, giữ lệnh và dữ liệu đang được xử lý. Ngắt điện là mất sạch, vì các tụ điện không còn giữ được điện tích.',
@@ -366,7 +366,7 @@ const BOOKS = [
           'RAM gần như không mòn khi ghi; SSD bị giới hạn bởi TBW, còn HDD mòn cơ học.',
           'Giá/GB của RAM cao gấp nhiều lần SSD, gấp hàng chục lần HDD — vì thế RAM chỉ 8–128 GB, còn ổ cứng tính bằng TB.'] },
   { id:'sram-dram', title:'SRAM và DRAM', t1:'HAI DÒNG RAM', t2:'SRAM · DRAM',
-    sub:'RAM TĨNH VÀ RAM ĐỘNG', year:'RAM', vol:'II', shelf:0, slot:1,
+    sub:'RAM TĨNH VÀ RAM ĐỘNG', year:'RAM', vol:'II', shelf:0, at:[-0.66,1.0],
     spine:'#3d5f78', cloth:'#10151b', edge:'#e9dfc4', dev:{f:"ddr3f",b:"ddr3b",mm:133.35,d:4,land:1,edge:"#1f6b3a"}, credit:"Ảnh: Mister rf · CC BY-SA 4.0 · Wikimedia Commons",
     stat:'6T vs 1T1C', statLabel:'CẤU TRÚC MỘT Ô NHỚ',
     blurb:'Cả hai đều mất dữ liệu khi tắt nguồn. Khác biệt nằm ở cách giữ từng bit — và điều đó quyết định chỗ đứng của mỗi loại trong máy.',
@@ -377,7 +377,7 @@ const BOOKS = [
           'DDR = Double Data Rate: truyền dữ liệu ở cả sườn lên và sườn xuống của xung nhịp.',
           'Số chân: DDR 184 · DDR2/DDR3 240 · DDR4/DDR5 288.'] },
   { id:'anatomy', title:'Giải phẫu thanh RAM', t1:'GIẢI PHẪU', t2:'THANH RAM',
-    sub:'PCB · DRAM · SPD · PMIC', year:'RAM', vol:'III', shelf:0, slot:2,
+    sub:'PCB · DRAM · SPD · PMIC', year:'RAM', vol:'III', shelf:0, at:[-0.30,1.0],
     spine:'#4f7a3a', cloth:'#121610', edge:'#eae3d2', dev:{f:"ddr5f",b:"ddr5b",mm:133.35,d:3.5,land:1,edge:"#2c5a2a"}, credit:"Ảnh: PantheraLeo1359531 · CC BY 4.0 · Wikimedia Commons",
     stat:'DDR5', statLabel:'THẾ HỆ ĐẦU TIÊN CÓ PMIC TRÊN THANH RAM',
     blurb:'Một thanh RAM là một bo mạch nhỏ với bốn thành phần chính, mỗi thứ giữ một vai trò riêng.',
@@ -388,7 +388,7 @@ const BOOKS = [
     back:['Tại sao DDR5 cần PMIC? Tốc độ càng cao thì điện áp càng phải sạch; ổn áp ngay trên thanh RAM thay vì trên bo mạch chủ giúp hệ thống ổn định hơn.',
           'Tại sao máy tự nhận đúng tốc độ RAM? Vì BIOS đọc chip SPD mỗi lần khởi động.'] },
   { id:'dual', title:'Kênh đôi', t1:'TẠI SAO', t2:'2 × 8 GB?',
-    sub:'KÊNH ĐƠN VÀ KÊNH ĐÔI', year:'RAM', vol:'IV', shelf:0, slot:3,
+    sub:'KÊNH ĐƠN VÀ KÊNH ĐÔI', year:'RAM', vol:'IV', shelf:0, at:[0.28,1.0],
     spine:'#b07d2a', cloth:'#17140f', edge:'#e8dfc8', dev:{f:"ddr4",twin:1,backMode:"mirror",mm:133.35,d:3,land:1,edge:"#3d7a3a"}, credit:"Ảnh: PantheraLeo1359531 · CC BY 4.0 · Wikimedia Commons",
     stat:'128-bit', statLabel:'BĂNG THÔNG KÊNH ĐÔI',
     blurb:'Cùng 16 GB, nhưng hai thanh 8 GB chạy kênh đôi cho băng thông gấp đôi một thanh 16 GB.',
@@ -401,7 +401,7 @@ const BOOKS = [
           'Chọn đúng dung lượng và chạy kênh đôi = hiệu năng tốt nhất trên mỗi đồng.'] },
 
   { id:'flow', title:'Vai trò HDD và SSD', t1:'VAI TRÒ CỦA', t2:'HDD & SSD',
-    sub:'GIỮ DỮ LIỆU KHI TẮT MÁY', year:'Lưu trữ', vol:'VI', shelf:1, slot:0,
+    sub:'GIỮ DỮ LIỆU KHI TẮT MÁY', year:'Lưu trữ', vol:'VI', shelf:1, at:[2.47,1.05], roll:-Math.PI/2,
     spine:'#6a5a4a', cloth:'#161513', edge:'#e2d8c0', dev:{f:"exosf",b:"exosb",mm:147,d:26.1,edge:"#b9bcc0",
       pair:{f:"m2f",b:"m2b",mm:80,d:2.4,edge:"#1a1a1c"}},
     caps:["<b>HDD 3.5 inch · Seagate Exos X20</b><span>Cổng SATA · kho dữ liệu lớn, giá/GB thấp</span>",
@@ -416,7 +416,7 @@ const BOOKS = [
           'Tại sao NVMe nhanh hơn SATA? NVMe đi thẳng qua làn PCIe với hàng nghìn hàng đợi lệnh song song.',
           'Kết hợp: SSD cho hệ điều hành và ứng dụng, HDD cho kho dữ liệu lớn.'] },
   { id:'hdd', title:'Ổ cứng HDD', t1:'Ổ CỨNG HDD', t2:'',
-    sub:'HARD DISK DRIVE · Ổ CỨNG TỪ', year:'Lưu trữ', vol:'VII', shelf:1, slot:1,
+    sub:'HARD DISK DRIVE · Ổ CỨNG TỪ', year:'Lưu trữ', vol:'VII', shelf:1, at:[2.47,0.0], roll:-Math.PI/2,
     spine:'#5c6670', cloth:'#111315', edge:'#e4d9c4', dev:{f:"hddf",b:"hddb",mm:147,d:26.1,edge:"#2a2a2c"}, credit:"Ảnh: Shams948 · CC0 · Wikimedia Commons",
     stat:'5–15 ms', statLabel:'ĐỘ TRỄ TRUY XUẤT CỦA HDD',
     blurb:'Đĩa từ quay hàng nghìn vòng mỗi phút, đầu đọc lướt sát bề mặt để đọc và đổi trạng thái từ tính.',
@@ -426,7 +426,7 @@ const BOOKS = [
     back:['Tại sao HDD chậm khi truy xuất ngẫu nhiên? Mỗi lần đọc, đầu đọc phải dời tới đúng rãnh và chờ đĩa quay tới đúng chỗ — mất vài mili-giây.',
           'Tại sao HDD vẫn tồn tại? Giá/GB rẻ nhất cho kho dữ liệu lớn: máy chủ, trung tâm dữ liệu, sao lưu.'] },
   { id:'ssd', title:'Ổ cứng SSD', t1:'Ổ CỨNG SSD', t2:'',
-    sub:'SOLID STATE DRIVE · NAND FLASH', year:'Lưu trữ', vol:'VIII', shelf:1, slot:2,
+    sub:'SOLID STATE DRIVE · NAND FLASH', year:'Lưu trữ', vol:'VIII', shelf:1, at:[-2.3,-0.30], roll:-Math.PI/2,
     spine:'#2e4f86', cloth:'#0e121b', edge:'#ddd8c6', dev:{f:"m2f",b:"m2b",mm:80,d:2.4,land:1,boost:1.5,edge:"#1a1a1c"}, credit:"Ảnh: D-Kuru · CC BY-SA 4.0 · Wikimedia Commons",
     stat:'30–100 µs', statLabel:'ĐỘ TRỄ CỦA SSD NVMe',
     blurb:'Không đĩa quay, không đầu đọc: dữ liệu là điện tích trong các ô nhớ NAND, do bộ điều khiển quản lý.',
@@ -438,7 +438,7 @@ const BOOKS = [
           'Tại sao QLC rẻ nhưng kém bền? 4 bit/ô = 16 mức điện áp phải phân biệt, sai lệch nhỏ cũng gây lỗi.',
           'Vì phải xóa cả khối, SSD cần TRIM + Garbage Collection để luôn có khối trống sẵn sàng ghi.'] },
   { id:'sshd', title:'HDD hay SSD?', t1:'HDD HAY', t2:'SSD?',
-    sub:'SO SÁNH · VÀ Ổ LAI SSHD', year:'Lưu trữ', vol:'IX', shelf:1, slot:3,
+    sub:'SO SÁNH · VÀ Ổ LAI SSHD', year:'Lưu trữ', vol:'IX', shelf:1, at:[2.47,-0.95], roll:-Math.PI/2,
     spine:'#7a5a8a', cloth:'#151218', edge:'#ded3ba', dev:{f:"tosf",b:"tosb",mm:100,d:12.5,boost:1.15,edge:"#4b4a46",
       pair:{f:"ssdf",b:"ssdb",mm:100,d:7,boost:1.15,edge:"#5d5d63"}},
     caps:["<b>HDD 2.5 inch · Toshiba</b><span>Đĩa từ quay + đầu đọc cơ học · 1,4 GB</span>",
@@ -617,6 +617,122 @@ const WT = {
   shLeft:-5.20, shLeftFeather:2.60, shRight:2.40, shRightFeather:2.40,
   tint:[1.0,0.876,0.726],       // kraft paper
 };
+/* ---------- the computer case: steel frame, motherboard, drive cage ---------- */
+function steelTexture(px){                        // brushed steel for the frame, read through the oak shader
+  const c=C(px,px),g=c.getContext('2d'),r=mulberry(77);
+  g.fillStyle='#8d9096';g.fillRect(0,0,px,px);
+  for(let i=0;i<9000;i++){
+    g.fillStyle=r()<.5?`rgba(255,255,255,${.03+r()*.08})`:`rgba(0,0,0,${.03+r()*.09})`;
+    g.fillRect(r()*px,r()*px,px*(.08+r()*.4),1);
+  }
+  const t=new THREE.CanvasTexture(c);
+  t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.anisotropy=8;
+  return t;
+}
+/* drawn in world units on the wall plane: x/y as in the scene.
+   Slots and bays line up with each volume's `at` in BOOKS. */
+function caseArt(px){
+  const c=C(px,px),g=c.getContext('2d'),r=mulberry(404);
+  const Ww=WALL.x1-WALL.x0, Hh=WALL.y1-WALL.y0, u=Ww/px;      // one texel in world units
+  g.setTransform(px/Ww,0,0,-px/Hh,-WALL.x0*px/Ww,WALL.y1*px/Hh);
+  const X0=-3.40, X1=3.40, TOP=1.76, SHR=-1.505, FLOOR=-1.96;
+  const MBX=1.25, CX0=1.55;                        // motherboard right edge, drive cage left edge
+  const box=(x,y,w,h,col)=>{g.fillStyle=col;g.fillRect(x,y,w,h);};
+  const dot=(x,y,rad,col)=>{g.fillStyle=col;g.beginPath();g.arc(x,y,rad,0,TAU);g.fill();};
+  const txt=(s,x,y,size,col,al)=>{g.save();g.translate(x,y);g.scale(1,-1);
+    g.font=`600 ${size}px Inter,Arial,sans-serif`;g.fillStyle=col;g.textAlign=al||'center';
+    g.fillText(s,0,0);g.restore();};
+  const silk='rgba(235,235,230,.75)';
+  const at=id=>BOOKS.find(b=>b.id===id).at;
+
+  /* ── case back wall ── */
+  box(X0,FLOOR,X1-X0,TOP-FLOOR,'#26292e');
+
+  /* ── motherboard ── */
+  const MB0=-1.35;
+  box(X0+0.05,MB0,MBX-X0-0.05,TOP-0.04-MB0,'#1b1e22');
+  g.lineWidth=u*1.6;                               // copper traces under the solder mask
+  for(let i=0;i<300;i++){
+    let x=X0+r()*(MBX-X0), y=MB0+r()*(TOP-MB0);
+    g.strokeStyle=`rgba(150,128,82,${.10+r()*.14})`;
+    g.beginPath();g.moveTo(x,y);
+    for(let k=0;k<3;k++){ if(r()<.5) x=clamp(x+(r()-.5)*1.2,X0+.1,MBX-.05); else y=clamp(y+(r()-.5)*.7,MB0+.05,TOP-.08); g.lineTo(x,y); }
+    g.stroke();
+  }
+  for(let i=0;i<80;i++) dot(X0+0.1+r()*(MBX-X0-0.15),MB0+0.05+r()*(TOP-MB0-0.12),u*2.2,'rgba(200,170,110,.35)');
+  for(const [x,y] of [[X0+0.18,TOP-0.16],[MBX-0.12,TOP-0.16],[X0+0.18,MB0+0.12],[MBX-0.12,MB0+0.12],[-0.9,0.2]]){
+    dot(x,y,0.05,'#b9a77a'); dot(x,y,0.025,'#1b1e22');
+  }
+  // rear I/O and VRM heatsink along the top-left
+  box(X0+0.05,1.02,0.22,0.66,'#5a5f67');
+  box(-3.05,1.52,1.05,0.18,'#3a3e45');
+  for(let i=0;i<14;i++) box(-3.03+i*0.074,1.54,0.04,0.14,'#565b63');
+
+  // CPU with its cooler fan
+  const CPx=-2.45, CPy=0.92;
+  box(CPx-0.48,CPy-0.48,0.96,0.96,'#2f3338');
+  dot(CPx,CPy,0.43,'#111316'); dot(CPx,CPy,0.40,'#1d2024');
+  g.fillStyle='#2c3036';
+  for(let i=0;i<7;i++){ g.save();g.translate(CPx,CPy);g.rotate(i*TAU/7);
+    g.beginPath();g.moveTo(0.06,0);g.quadraticCurveTo(0.26,0.06,0.37,0.17);g.lineTo(0.30,0.24);g.quadraticCurveTo(0.18,0.10,0.04,0.05);g.fill();g.restore(); }
+  dot(CPx,CPy,0.09,'#3b4047'); txt('CPU',CPx,CPy-0.03,0.075,silk);
+  for(const [x,y] of [[-1,-1],[1,-1],[-1,1],[1,1]]) dot(CPx+x*0.42,CPy+y*0.42,0.03,'#9aa0a8');
+
+  // DIMM slots, one behind each stick; the dual-channel kit fills two
+  const dimms=[];
+  for(const id of ['ram','sram-dram','anatomy']) dimms.push(at(id)[0]);
+  dimms.push(at('dual')[0]-0.22, at('dual')[0]+0.22);
+  dimms.forEach((x,i)=>{
+    box(x-0.06,0.30,0.12,1.40,'#0b0c0e');
+    box(x-0.01,0.34,0.02,1.32,'#040405');
+    box(x-0.075,1.62,0.15,0.09,'#cfd3d8');         // latches top and bottom
+    box(x-0.075,0.27,0.15,0.09,'#cfd3d8');
+  });
+  txt('DIMM A1 · A2 · B1 · B2',(dimms[0]+dimms[4])/2,0.12,0.065,silk);
+
+  // M.2 slot under the CPU: connector on the left, standoff on the right
+  const [m2x,m2y]=at('ssd'), m2L=0.54;
+  box(m2x-m2L-0.10,m2y-0.11,0.12,0.22,'#0b0c0e');
+  box(m2x-m2L-0.08,m2y-0.09,0.03,0.18,'#c9a24a');
+  dot(m2x+m2L+0.03,m2y,0.045,'#c9a24a'); dot(m2x+m2L+0.03,m2y,0.02,'#1b1e22');
+  txt('M.2 (PCIe NVMe)',m2x,m2y+0.24,0.065,silk);
+
+  // PCIe x16 slots and the chipset
+  for(const y of [-0.82,-1.15]){ box(-3.20,y-0.05,2.30,0.10,'#0b0c0e'); box(-3.18,y-0.01,2.26,0.02,'#2a2c30'); }
+  txt('PCIe x16',-2.05,-0.67,0.06,silk);
+  box(-0.55,-0.95,0.42,0.42,'#3a3e45'); txt('CHIPSET',-0.34,-0.77,0.055,silk);
+
+  // ATX 24-pin and the SATA ports on the board's right edge
+  box(MBX-0.22,0.45,0.18,0.95,'#ece9e2');
+  for(let i=0;i<12;i++) box(MBX-0.20,0.48+i*0.075,0.14,0.05,'#1e1e1e');
+  const ports=[0.0,-0.18,-0.36];
+  for(const y of ports){ box(MBX-0.20,y-0.06,0.18,0.12,'#1e1e1e'); box(MBX-0.17,y-0.025,0.12,0.05,'#d8d8d8'); }
+  txt('SATA',MBX-0.11,0.12,0.055,silk);
+
+  /* ── drive cage on the right, one rail pair per drive ── */
+  box(CX0,-1.38,X1-CX0,3.06,'#6f737a');
+  g.fillStyle='rgba(20,22,26,.55)';
+  for(let y=-1.30;y<1.62;y+=0.09) for(let x=CX0+0.08+((y*11|0)%2)*0.045;x<X1-0.05;x+=0.09){
+    g.beginPath();g.arc(x,y,0.02,0,TAU);g.fill();
+  }
+  box(CX0,-1.38,0.04,3.06,'#9a9ea5'); box(X1-0.04,-1.38,0.04,3.06,'#9a9ea5');
+  const drives=[['flow',0.46],['hdd',0.46],['sshd',0.36]];
+  drives.forEach(([id,hh],i)=>{
+    const [x,y]=at(id);
+    box(CX0+0.04,y-hh-0.05,X1-CX0-0.08,0.04,'#a8acb3');   // the rail the drive sits on
+    box(CX0+0.04,y+hh+0.02,X1-CX0-0.08,0.03,'#a8acb3');
+    // SATA cable from the drive's edge to its port on the board
+    const py=ports[i];
+    g.strokeStyle=['#b3262d','#b3262d','#3b6fb6'][i]; g.lineWidth=0.05; g.lineCap='round';
+    g.beginPath(); g.moveTo(x-0.55,y); g.bezierCurveTo(CX0-0.05,y,MBX+0.15,py,MBX-0.02,py); g.stroke();
+  });
+
+  /* ── PSU under the shroud ── */
+  box(X0,FLOOR,X1-X0,SHR-FLOOR,'#1f2226');
+  for(let i=0;i<14;i++) box(-1.6+i*0.23,FLOOR+0.12,0.11,SHR-FLOOR-0.24,'#121417');
+  txt('PSU',-2.6,(SHR+FLOOR)/2-0.04,0.13,'rgba(220,222,226,.55)');
+  return c;
+}
 /* tiling paper tooth — fibres, mottle and a fine grain */
 function paperTexture(px){
   const c=C(px,px),g=c.getContext('2d'),r=mulberry(2027);
@@ -679,6 +795,12 @@ function wallTexture(px){
       d[o+3]=255;
     }
   }
+  // the inside of the case is painted over the room's wall
+  const cd=caseArt(px).getContext('2d').getImageData(0,0,px,px).data;
+  for(let p=0;p<px*px;p++){
+    const a=cd[p*4+3]/255; if(!a) continue;
+    for(let k=0;k<3;k++) d[p*4+k]=d[p*4+k]*(1-a)+cd[p*4+k]*a;
+  }
   g.putImageData(img,0,0);
   const t=new THREE.CanvasTexture(c);
   t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;
@@ -705,7 +827,7 @@ const books = [];
 /* ---- wall ---- */
 const wallMat = new THREE.ShaderMaterial({
   transparent:true,
-  uniforms:{uBake:{value:wallTexture(1024)},uPaper:{value:paperTexture(512)},uOpacity:{value:0}},
+  uniforms:{uBake:{value:wallTexture(2048)},uPaper:{value:paperTexture(512)},uOpacity:{value:0}},
   vertexShader:`varying vec2 vUv; void main(){vUv=uv;
     gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
   fragmentShader:`
@@ -724,7 +846,7 @@ wall.position.set(0,(WALL.y0+WALL.y1)/2,K.wallZ);
 scene.add(wall);
 
 /* ---- oak ---- */
-const WOOD_TEX = woodTexture(1024);
+const WOOD_TEX = steelTexture(1024);
 function oakMaterial(axis){
   return new THREE.ShaderMaterial({
     transparent:true,
@@ -778,7 +900,8 @@ function upright(x){
   m.position.set(x,-0.10,K.wallZ+K.plankDepth/2);
   return m;
 }
-furniture.add(plank(K.shelfTop[0]),plank(K.shelfTop[1]),upright(-3.385),upright(3.385));
+// the case: two side rails, the roof, the PSU shroud and the floor
+furniture.add(upright(-3.385),upright(3.385),plank(1.865),plank(-1.40),plank(-1.86));
 
 /* ---- shadow sprites ---- */
 function shadowTex(){
@@ -1014,10 +1137,10 @@ const mPos=(i,scroll)=>{
   if(k>=0) return [0, K.mY + k*K.mStepY, K.mZ0 - k*K.mStepZ];
   return [0, K.mY + k*0.86, K.mZ0 - k*0.14];
 };
-const slotX=i=>(i-1.5)*K.slot;                   // four devices per shelf, centred
+/* each device sits where it plugs in: RAM in its DIMM slot, the M.2 on the board, drives in the cage */
 function bookBase(b){
   if(MOBILE) return mPos(b.index,0);
-  return [slotX(b.data.slot), K.shelfTop[b.data.shelf]+(b.H/2)*Math.cos(b._lean), K.bookZ];
+  return [b.data.at[0], b.data.at[1], K.wallZ+b.D/2+0.06];
 }
 /* a landscape photo turns a quarter so the device stands on its end in the slot;
    the back turns the other way so it reads upright once the device is flipped */
@@ -1064,7 +1187,6 @@ function placeCaps(B,az){
 }
 
 function buildBook(data,index){
-  const rnd=mulberry(index*7919+13);
   const dev=data.dev, pl=PLATE[data.id];
   const B={data,index,flipped:false,land:!!dev.land};
   // real size: the long side is dev.mm, the short side follows the photo
@@ -1074,9 +1196,8 @@ function buildBook(data,index){
   B.H=long;
   B.D=dev.d*k;
   B.activeRot=[K.activeRot[0],K.activeRot[1],B.land?-Math.PI/2:0];
-  B._lean=K.lean+(rnd()-0.5)*0.075;
-  B._yaw = K.yaw+(rnd()-0.5)*0.045;
-  B._roll=(rnd()-0.5)*0.018;
+  B._lean=0; B._yaw=0;                                   // mounted flat against the board, not leaning
+  B._roll=data.roll||0;                                  // drives lie on their side in the cage
   B.rest=[B._lean,B._yaw,B._roll];
   B.restTilt=MOBILE?K.mTilt:B._lean;
   B.base=[0,0,0.01];
@@ -1135,12 +1256,14 @@ function buildBook(data,index){
   hit.position.set(B.basePos[0],B.basePos[1],B.basePos[2]-0.04);
   hit.rotation.x=MOBILE?K.mTilt:B._lean;
   hit.rotation.y=MOBILE?0:B._yaw;
+  hit.rotation.z=MOBILE?0:B._roll;
   hit.userData.book=B;
   scene.add(hit);
 
   const wallSh=new THREE.Mesh(new THREE.PlaneGeometry(2.20*(W+0.25)/(SZW+0.25),2.70*H/SZH),
     new THREE.MeshBasicMaterial({map:SHADOW_TEX,transparent:true,opacity:0,depthWrite:false,color:0x241c12}));
   wallSh.position.set(B.basePos[0]-0.05,B.basePos[1]-0.04,K.wallZ+0.004);
+  wallSh.rotation.z=B._roll;
   scene.add(wallSh);
 
   const footZ=K.bookZ+(H/2)*Math.sin(-B._lean);             // where the device meets the plank
@@ -1187,6 +1310,7 @@ function buildBook(data,index){
     sWob:new Spring([0,0,0],80,6,1),
     tActiveP:new Tw([...B.basePos]), tActiveR:new Tw([0,0,0]),
     tScale:new Tw([0]), tRefl:new Tw([0.34]), tFade:new Tw([0]), tSeat:new Tw([1])});
+  cs.visible=crease.visible=refl.visible=false;            // nothing stands on a shelf any more
   if(MOBILE){wallSh.visible=false;cs.visible=false;crease.visible=false;refl.visible=false;
              gRoot.renderOrder=100-index;}
   return B;
@@ -1197,7 +1321,7 @@ const S={anim:'intro',active:null,lifted:null};
 function hoverIn(B,dur){
   const d=dur===undefined?K.hoverLift:dur;
   B.tHover.start([B.base[0],B.base[1]+0.085,B.base[2]+0.075],d,easeOutQuart);
-  B.tTilt.start([0,0,0],d,easeOutQuart);
+  B.tTilt.start([0,0,MOBILE||S.active===B?0:B._roll],d,easeOutQuart);   // a hovered drive slides out still lying down
   B.sWob.start([0,0,0]);
   B.tRefl.start([0],d*0.45,easeOutQuart);
   B.loadBack();
@@ -1685,7 +1809,7 @@ function applyMode(){
     }
     B.hit.position.set(B.basePos[0],B.basePos[1],B.basePos[2]-0.04);
     B.hit.rotation.x=MOBILE?K.mTilt:B._lean; B.hit.rotation.y=MOBILE?0:B._yaw;
-    B.wallSh.visible=!MOBILE; B.cs.visible=!MOBILE; B.crease.visible=!MOBILE; B.refl.visible=!MOBILE;
+    B.wallSh.visible=!MOBILE;
     B.gRoot.renderOrder=MOBILE?100-B.index:0;
   }
   if(MOBILE)setMobileIndex(M.index,true);
