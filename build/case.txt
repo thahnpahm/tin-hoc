@@ -1,0 +1,131 @@
+@@@OLD
+  lean: -0.20, yaw: 0.155,
+@@@NEW
+  lean: -0.05, yaw: 0.155,              // seated upright in their slots, not leaning like books
+@@@OLD
+  const img=g.createImageData(px,px), d=img.data;
+  const PT=K.shelfTop, PB=[K.shelfTop[0]-K.plankThick, K.shelfTop[1]-K.plankThick];
+@@@NEW
+  const img=g.createImageData(px,px), d=img.data, LUM=new Float32Array(px*px);
+  const PT=K.shelfTop, PB=[K.shelfTop[0]-K.plankThick, K.shelfTop[1]-K.plankThick];
+@@@OLD
+      const n=(r()-0.5)*5;            // limewash tooth
+@@@NEW
+      const n=(r()-0.5)*5;            // limewash tooth
+      LUM[j*px+i]=L;
+@@@OLD
+      d[o+3]=255;
+    }
+  }
+  g.putImageData(img,0,0);
+@@@NEW
+      d[o+3]=255;
+    }
+  }
+  // the inside of the case, lit by the same baked light as the room around it
+  const cd=caseArt(px).getContext('2d').getImageData(0,0,px,px).data;
+  for(let p=0;p<px*px;p++){
+    const a=cd[p*4+3]/255; if(!a) continue;
+    const s=Math.pow(clamp(LUM[p]/WT.peak,0,1.2),1.4)*1.08, o=p*4;
+    for(let k=0;k<3;k++) d[o+k]=d[o+k]*(1-a)+clamp(cd[o+k]*s,0,255)*a;
+  }
+  g.putImageData(img,0,0);
+@@@OLD
+  uniforms:{uBake:{value:wallTexture(1024)},
+@@@NEW
+  uniforms:{uBake:{value:wallTexture(2048)},
+@@@OLD
+const WOOD_TEX = woodTexture(1024);
+@@@NEW
+const WOOD_TEX = steelTexture(1024);
+@@@OLD
+furniture.add(plank(K.shelfTop[0]),plank(K.shelfTop[1]),upright(-3.385),upright(3.385));
+@@@NEW
+furniture.add(plank(K.shelfTop[0]),plank(K.shelfTop[1]),upright(-3.385),upright(3.385),
+  plank(1.865),plank(-1.86));                 // the case's roof and the PSU shroud close the box
+@@@OLD
+/* tiling paper tooth — fibres, mottle and a fine grain */
+@@@NEW
+/* ---------- the computer case: steel frame, motherboard, drive bay ---------- */
+function steelTexture(px){                        // brushed steel for the frame, read through the oak shader
+  const c=C(px,px),g=c.getContext('2d'),r=mulberry(77);
+  g.fillStyle='#8d9096';g.fillRect(0,0,px,px);
+  for(let i=0;i<9000;i++){
+    g.fillStyle=r()<.5?`rgba(255,255,255,${.03+r()*.08})`:`rgba(0,0,0,${.03+r()*.09})`;
+    g.fillRect(r()*px,r()*px,px*(.08+r()*.4),1);
+  }
+  const t=new THREE.CanvasTexture(c);
+  t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.anisotropy=8;
+  return t;
+}
+/* drawn in world units on the wall plane: x/y as in the scene */
+function caseArt(px){
+  const c=C(px,px),g=c.getContext('2d'),r=mulberry(404);
+  const Ww=WALL.x1-WALL.x0, Hh=WALL.y1-WALL.y0, u=Ww/px;      // one texel in world units
+  g.setTransform(px/Ww,0,0,-px/Hh,-WALL.x0*px/Ww,WALL.y1*px/Hh);
+  const X0=-3.40,X1=3.40, TOP=1.76, MB=K.shelfTop[0], BAY=K.shelfTop[1], FLOOR=-1.96;
+  const box=(x,y,w,h,col)=>{g.fillStyle=col;g.fillRect(x,y,w,h);};
+  const txt=(s,x,y,size,col,al)=>{g.save();g.translate(x,y);g.scale(1,-1);
+    g.font=`600 ${size}px Inter,Arial,sans-serif`;g.fillStyle=col;g.textAlign=al||'center';
+    g.fillText(s,0,0);g.restore();};
+  const slots=[-1.5,-0.5,0.5,1.5].map(i=>i*K.slot);
+
+  /* ── motherboard: black PCB behind the RAM ── */
+  box(X0,MB,X1-X0,TOP-MB,'#1c1f23');
+  g.lineWidth=u*1.6;                               // copper traces under the solder mask
+  for(let i=0;i<260;i++){
+    let x=X0+r()*(X1-X0), y=MB+r()*(TOP-MB);
+    g.strokeStyle=`rgba(150,128,82,${.10+r()*.14})`;
+    g.beginPath();g.moveTo(x,y);
+    for(let k=0;k<3;k++){ if(r()<.5) x+=(r()-.5)*1.2; else y+=(r()-.5)*.7; g.lineTo(x,y); }
+    g.stroke();
+  }
+  for(let i=0;i<70;i++){                           // vias
+    g.fillStyle='rgba(200,170,110,.35)';
+    g.beginPath();g.arc(X0+r()*(X1-X0),MB+r()*(TOP-MB),u*2.2,0,TAU);g.fill();
+  }
+  // VRM heatsink and capacitors on the left, the 24-pin ATX header on the right
+  box(-3.30,0.55,0.62,1.05,'#3a3e45');
+  for(let i=0;i<9;i++) box(-3.27+i*0.066,0.58,0.035,0.99,'#555a62');
+  for(let i=0;i<4;i++){ g.fillStyle='#2b2e33';g.beginPath();g.arc(-2.95+i*0.16,0.40,0.06,0,TAU);g.fill();
+    g.fillStyle='#8a8f97';g.beginPath();g.arc(-2.95+i*0.16,0.40,0.045,0,TAU);g.fill(); }
+  box(2.80,0.45,0.30,1.15,'#ece9e2');
+  for(let i=0;i<12;i++) for(let k=0;k<2;k++) box(2.85+k*0.12,0.50+i*0.088,0.08,0.06,'#1e1e1e');
+  txt('ATX 24-PIN',2.95,1.66,0.065,'rgba(235,235,230,.75)');
+  // DIMM slots, one behind each stick (the dual-channel kit gets two)
+  slots.forEach((x,i)=>{
+    const xs=i===3?[x-0.26,x+0.26]:[x];
+    xs.forEach((sx,k)=>{
+      box(sx-0.075,MB+0.01,0.15,1.40,'#0d0e10');
+      box(sx-0.012,MB+0.05,0.024,1.32,'#050506');
+      box(sx-0.09,MB+1.41,0.18,0.10,'#cfd3d8');    // latch
+    });
+  });
+  txt('DIMM SLOTS · DUAL CHANNEL',0,TOP-0.07,0.07,'rgba(235,235,230,.55)');
+  for(const [x,y] of [[-3.25,TOP-0.12],[3.25,TOP-0.12],[-3.25,MB+0.10],[3.25,MB+0.10]]){
+    g.fillStyle='#b9a77a';g.beginPath();g.arc(x,y,0.05,0,TAU);g.fill();
+    g.fillStyle='#1c1f23';g.beginPath();g.arc(x,y,0.025,0,TAU);g.fill();
+  }
+
+  /* ── drive bay: perforated steel with a rail between each bay ── */
+  const bTop=MB-K.plankThick;
+  box(X0,BAY,X1-X0,bTop-BAY,'#6f737a');
+  g.fillStyle='rgba(20,22,26,.55)';
+  for(let y=BAY+0.12;y<bTop-0.05;y+=0.09) for(let x=X0+0.08+((y*11|0)%2)*0.045;x<X1;x+=0.09){
+    g.beginPath();g.arc(x,y,0.022,0,TAU);g.fill();
+  }
+  [-1,0,1].forEach(i=>{ box(i*K.slot-0.03,BAY,0.06,bTop-BAY,'#9a9ea5'); box(i*K.slot+0.03,BAY,0.012,bTop-BAY,'rgba(0,0,0,.35)'); });
+  ['SATA 0','SATA 1','M.2_1','SATA 2'].forEach((s,i)=>{
+    box(slots[i]-0.32,bTop-0.16,0.64,0.11,'rgba(28,30,34,.85)');
+    txt(s,slots[i],bTop-0.135,0.07,'rgba(230,232,236,.85)');
+  });
+
+  /* ── PSU shroud under the bay ── */
+  const sTop=BAY-K.plankThick;
+  box(X0,FLOOR,X1-X0,sTop-FLOOR,'#2a2d32');
+  for(let i=0;i<14;i++) box(-1.6+i*0.23,FLOOR+0.12,0.11,sTop-FLOOR-0.24,'#15171a');
+  txt('PSU',-2.6,(sTop+FLOOR)/2-0.04,0.13,'rgba(220,222,226,.55)');
+  return c;
+}
+/* tiling paper tooth — fibres, mottle and a fine grain */
+@@@END

@@ -11,7 +11,7 @@ cut(967, 1089, () => L[966] === '/* ---- one volume ---- */' && L[1087] === '  r
 cut(325, 514, () => L[324].startsWith('/* The plates') && L[513] === '}' && L[363] === "const FOIL = '#efe4cc';", devices);
 cut(236, 279, () => L[235].startsWith('const STUDIO') && L[278] === '];', read('books.js'));
 let html = L.join('\n');
-const txt = fs.readFileSync('patches.txt', 'utf8') + fs.readFileSync('chat.txt', 'utf8') + fs.readFileSync('pair.txt', 'utf8');
+const txt = fs.readFileSync('patches.txt', 'utf8') + fs.readFileSync('chat.txt', 'utf8') + fs.readFileSync('pair.txt', 'utf8') + fs.readFileSync('case.txt', 'utf8');
 const re = /@@@OLD\n([\s\S]*?)\n@@@NEW\n([\s\S]*?)(?=@@@(?:OLD|END))/g;
 let m, n = 0;
 while ((m = re.exec(txt))) {
