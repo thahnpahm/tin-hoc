@@ -6,10 +6,10 @@ const mPos=(i,scroll)=>{
   if(k>=0) return [0, K.mY + k*K.mStepY, K.mZ0 - k*K.mStepZ];
   return [0, K.mY + k*0.86, K.mZ0 - k*0.14];
 };
-const slotX=i=>(i-1.5)*K.slot;                   // four devices per shelf, centred
+/* each device sits where it plugs in: RAM in its DIMM slot, the M.2 on the board, drives in the cage */
 function bookBase(b){
   if(MOBILE) return mPos(b.index,0);
-  return [slotX(b.data.slot), K.shelfTop[b.data.shelf]+(b.H/2)*Math.cos(b._lean), K.bookZ];
+  return [b.data.at[0], b.data.at[1], K.wallZ+b.D/2+0.06];
 }
 /* a landscape photo turns a quarter so the device stands on its end in the slot;
    the back turns the other way so it reads upright once the device is flipped */
@@ -56,7 +56,6 @@ function placeCaps(B,az){
 }
 
 function buildBook(data,index){
-  const rnd=mulberry(index*7919+13);
   const dev=data.dev, pl=PLATE[data.id];
   const B={data,index,flipped:false,land:!!dev.land};
   // real size: the long side is dev.mm, the short side follows the photo
@@ -66,9 +65,8 @@ function buildBook(data,index){
   B.H=long;
   B.D=dev.d*k;
   B.activeRot=[K.activeRot[0],K.activeRot[1],B.land?-Math.PI/2:0];
-  B._lean=K.lean+(rnd()-0.5)*0.075;
-  B._yaw = K.yaw+(rnd()-0.5)*0.045;
-  B._roll=(rnd()-0.5)*0.018;
+  B._lean=0; B._yaw=0;                                   // mounted flat against the board, not leaning
+  B._roll=data.roll||0;                                  // drives lie on their side in the cage
   B.rest=[B._lean,B._yaw,B._roll];
   B.restTilt=MOBILE?K.mTilt:B._lean;
   B.base=[0,0,0.01];
@@ -127,12 +125,14 @@ function buildBook(data,index){
   hit.position.set(B.basePos[0],B.basePos[1],B.basePos[2]-0.04);
   hit.rotation.x=MOBILE?K.mTilt:B._lean;
   hit.rotation.y=MOBILE?0:B._yaw;
+  hit.rotation.z=MOBILE?0:B._roll;
   hit.userData.book=B;
   scene.add(hit);
 
   const wallSh=new THREE.Mesh(new THREE.PlaneGeometry(2.20*(W+0.25)/(SZW+0.25),2.70*H/SZH),
     new THREE.MeshBasicMaterial({map:SHADOW_TEX,transparent:true,opacity:0,depthWrite:false,color:0x241c12}));
   wallSh.position.set(B.basePos[0]-0.05,B.basePos[1]-0.04,K.wallZ+0.004);
+  wallSh.rotation.z=B._roll;
   scene.add(wallSh);
 
   const footZ=K.bookZ+(H/2)*Math.sin(-B._lean);             // where the device meets the plank
@@ -179,6 +179,7 @@ function buildBook(data,index){
     sWob:new Spring([0,0,0],80,6,1),
     tActiveP:new Tw([...B.basePos]), tActiveR:new Tw([0,0,0]),
     tScale:new Tw([0]), tRefl:new Tw([0.34]), tFade:new Tw([0]), tSeat:new Tw([1])});
+  cs.visible=crease.visible=refl.visible=false;            // nothing stands on a shelf any more
   if(MOBILE){wallSh.visible=false;cs.visible=false;crease.visible=false;refl.visible=false;
              gRoot.renderOrder=100-index;}
   return B;
