@@ -1,0 +1,84 @@
+@@@OLD
+  dMeta.textContent=`${d.year} · Phần ${d.vol}`+(back?' · Tại sao?':'');
+@@@NEW
+  dMeta.textContent=`${d.year} · ${TX.part} ${d.vol}`+(back?' · '+TX.why:'');
+@@@OLD
+  dLook.textContent=back?'Lật mặt trước':'Lật mặt sau';
+@@@NEW
+  dLook.textContent=back?TX.front:TX.back;
+@@@OLD
+  if(MOBILE){ mMeta.textContent=`${d.year} · Phần ${d.vol}`; mTitle.textContent=d.title;
+              mDetails.textContent='Đóng'; }
+@@@NEW
+  if(MOBILE){ mMeta.textContent=`${d.year} · ${TX.part} ${d.vol}`; mTitle.textContent=d.title;
+              mDetails.textContent=TX.close; }
+@@@OLD
+  mDetails.textContent='Chi tiết';
+@@@NEW
+  mDetails.textContent=TX.details;
+@@@OLD
+  b.setAttribute('aria-label',`${d.title}, phần ${d.vol}. Mở chủ đề.`);
+@@@NEW
+  b.setAttribute('aria-label',`${d.title}, ${TX.part} ${d.vol}. ${TX.open}`);
+@@@OLD
+              `<p class="studio">Phần ${d.vol}</p><h2>${d.title}</h2></span>`;
+@@@NEW
+              `<p class="studio">${TX.part} ${d.vol}</p><h2>${d.title}</h2></span>`;
+@@@OLD
+  b.innerHTML=`<span>${d.year} · Phần ${d.vol}</span>${d.title}`;
+@@@NEW
+  b.innerHTML=`<span>${d.year} · ${TX.part} ${d.vol}</span>${d.title}`;
+@@@OLD
+  mMeta.textContent=`${d.year} · Phần ${d.vol}`; mTitle.textContent=d.title;
+@@@NEW
+  mMeta.textContent=`${d.year} · ${TX.part} ${d.vol}`; mTitle.textContent=d.title;
+@@@OLD
+hintEl.textContent='Kéo để xoay';
+@@@NEW
+hintEl.textContent=TX.drag;
+@@@OLD
+out.textContent='Đang suy nghĩ…';
+@@@NEW
+out.textContent=TX.think;
+@@@OLD
+Trả lời bằng tiếng Việt,
+@@@NEW
+Trả lời bằng ${TX.reply},
+@@@OLD
+    <button class="pill chatpill rise" data-d="240" id="chat-open" hidden>Hỏi đáp</button>
+@@@NEW
+    <button class="pill chatpill rise" data-d="220" id="lang" aria-label="Switch to English">EN</button>
+    <button class="pill chatpill rise" data-d="240" id="chat-open" hidden>Hỏi đáp</button>
+@@@OLD
+/* ---- boot ---- */
+@@@NEW
+/* ---- VI / EN: swap each volume's copy and every interface string in place ---- */
+const VI_COPY = BOOKS.map(b=>Object.fromEntries(Object.keys(EN[b.id]).map(k=>[k,b[k]])));
+const langBtn=document.getElementById('lang');
+function setLang(l){
+  LANG=l==='en'?'en':'vi'; TX=UI[LANG];
+  BOOKS.forEach((b,i)=>Object.assign(b,LANG==='en'?EN[b.id]:VI_COPY[i]));
+  document.documentElement.lang=LANG;
+  document.title=TX.brand;
+  const set=(sel,t)=>{const el=document.querySelector(sel); if(el) el.textContent=t;};
+  set('.brandname',TX.brand); set('header a.pill',TX.src); set('#chat-open',TX.ask);
+  set('#detail-close',TX.close); set('#mbar-look',TX.flip); set('.chat-k',TX.chatK); set('.chat h3',TX.chatH);
+  set('#chat-send',TX.send); set('#chat-stop',TX.stop); set('.chat-foot',TX.foot); set('.chat-log .msg.ai p',TX.hello);
+  chatInput.placeholder=TX.ph;
+  chatChips.querySelectorAll('button').forEach((b,i)=>b.textContent=TX.chips[i]);
+  langBtn.textContent=TX.other; langBtn.setAttribute('aria-label',TX.otherLabel);
+  tl.querySelectorAll('.tli').forEach((b,i)=>{ const d=BOOKS[i];
+    b.setAttribute('aria-label',`${d.title}, ${TX.part} ${d.vol}. ${TX.open}`);
+    b.querySelector('.tltxt').innerHTML=`<p>${d.year}</p><p class="studio">${TX.part} ${d.vol}</p><h2>${d.title}</h2>`; });
+  menu.querySelectorAll('button').forEach((b,i)=>{ const d=BOOKS[i]; b.innerHTML=`<span>${d.year} · ${TX.part} ${d.vol}</span>${d.title}`; });
+  if(S.active){ renderPanel(S.active); placeCaps(S.active,S.active._az); }
+  mDetails.textContent=S.active?TX.close:TX.details;
+  if(MOBILE) setMobileIndex(M.index,true);
+  try{ localStorage.setItem('lang',LANG); }catch(e){}
+}
+langBtn.addEventListener('click',()=>setLang(LANG==='en'?'vi':'en'));
+{ let saved=null; try{ saved=localStorage.getItem('lang'); }catch(e){}
+  if(saved==='en') setLang('en'); }
+
+/* ---- boot ---- */
+@@@END
