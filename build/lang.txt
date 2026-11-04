@@ -1,7 +1,7 @@
 @@@OLD
   dMeta.textContent=`${d.year} · Phần ${d.vol}`+(back?' · Tại sao?':'');
 @@@NEW
-  dMeta.textContent=`${d.year} · ${TX.part} ${d.vol}`+(back?' · '+TX.why:'');
+  dMeta.textContent=`${d.year} · ${TX.part} ${d.vol}`+(back?' · '+(d.backMeta||TX.why):'');
 @@@OLD
   dLook.textContent=back?'Lật mặt trước':'Lật mặt sau';
 @@@NEW
@@ -49,6 +49,26 @@ Trả lời bằng ${TX.reply},
 @@@NEW
     <button class="pill chatpill rise" data-d="220" id="lang" aria-label="Switch to English">EN</button>
     <button class="pill chatpill rise" data-d="240" id="chat-open" hidden>Hỏi đáp</button>
+@@@OLD
+  dPts.replaceChildren(...(back?d.back:d.pts).map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));
+@@@NEW
+  // the back lists what is on the market: [name, pros, cons], or a plain line
+  dPts.replaceChildren(...(back?d.back:d.pts).map(t=>{const li=document.createElement('li');
+    if(!Array.isArray(t)){ li.textContent=t; return li; }
+    const add=(tag,cls,txt)=>{const e=document.createElement(tag); if(cls)e.className=cls; e.textContent=txt; li.appendChild(e);};
+    li.classList.add('item'); add('b','',t[0]); add('span','pro','+ '+t[1]); add('span','con','− '+t[2]);
+    return li;}));
+@@@OLD
+  .detail li{font-size:clamp(15px,2.25vh,19px);margin-bottom:10px}
+@@@NEW
+  .detail li{font-size:clamp(15px,2.25vh,19px);margin-bottom:10px}
+  .detail li.item b{display:block;font-weight:600;color:var(--ink)}
+  .detail li.item span{display:block;font-size:.9em;line-height:1.4}
+  .detail li.item .con{color:var(--ink-soft)}
+@@@OLD
+${b.back.join(' ')}
+@@@NEW
+${b.back.flat().join(' ')}
 @@@OLD
 /* ---- boot ---- */
 @@@NEW
