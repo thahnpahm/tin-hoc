@@ -2,6 +2,7 @@
 
 Web thuyết trình 3D môn Tin học về RAM, HDD và SSD (dựa trên ThreeUI AshenPress).
 
+- Trang web: https://thahnpahm.github.io/tin-hoc/ (GitHub Pages, phục vụ `index.html` từ nhánh `main`).
 - `index.html`: bản chạy độc lập, ảnh nhúng sẵn, bấm đúp là mở.
 - Artifact: https://claude.ai/artifact/YbNDwjs2r4Le8WtyLB1rd6 (trang `build/bo-nho-luu-tru.html`, ảnh ở `img/*.webp` lấy từ `build/out/`).
 
